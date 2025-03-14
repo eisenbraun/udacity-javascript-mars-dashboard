@@ -16,11 +16,15 @@ const render = async (root, state) => {
     root.innerHTML = App(state)
 }
 
+const load = (state, ...comps) => {
+    return comps.reduce((html, comp) => (html + comp(state)), ``)
+}
 
 // create content
 const App = (state) => {    
-    return `${Form(state)} ${Photos(state)}`
+    return load(state, Form, Photos)
 }
+
 
 // listening for load event because page should load before any JS is called
 window.addEventListener('load', () => {
