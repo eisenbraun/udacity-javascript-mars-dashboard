@@ -1,15 +1,16 @@
-const store = {
+const store = Immutable.Map({
     photos: [],
     rover: '',
     rovers: ['Curiosity', 'Opportunity', 'Spirit'],
-}
+})
 
 // add our markup to the page
 const root = document.getElementById('root')
 
 const updateStore = (store, newState) => {
-    store = Object.assign(store, newState)
-    render(root, store)
+    const newStore = store.merge(newState)
+    console.log(newStore.toJS())
+    render(root, newStore)
 }
 
 const render = async (root, state) => {
@@ -44,8 +45,8 @@ const Form = (state) => {
             <label class="form-label">Rovers</label>
             <select class="form-select" id="rover">
                 <option>Select a Rover</option>
-                ${state.rovers.map(rover => 
-                    `<option ${rover === state.rover ? 'selected' : ''}>${rover}</option>`
+                ${state.toJS().rovers.map(rover => 
+                    `<option ${rover === state.toJS().rover ? 'selected' : ''}>${rover}</option>`
                 ).join('')}
             </select>
         </div>
@@ -54,14 +55,14 @@ const Form = (state) => {
 }
 
 const Photos = (state) => {
-    if (state.photos.length === 0) {
+    if (state.toJS().photos.length === 0 && state.toJS().rover) {
         getPhotos(state)
     }
     
     return (`
     <h2 class="mb-3">Latest Photos</h2>
     <div class="gallery">
-        ${state.photos.reduce((html, photo) => 
+        ${state.toJS().photos.reduce((html, photo) => 
             (html + `<img src="${photo.img_src}" alt="${photo.full_name}">`), '')}
     </div>`)
 }
