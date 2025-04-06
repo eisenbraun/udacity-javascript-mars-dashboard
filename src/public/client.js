@@ -67,17 +67,20 @@ const Form = (state) => {
 const Photos = (state) => {
     if (state.toJS().photos.length === 0 && state.toJS().rover) {
         getPhotos(state)
+        return ''
     }
     
     if (state.toJS().rover) {
         return (`
-        <h2>${state.toJS().rover} Photos for ${formatDate(state.toJS().photos[0].earth_date)}</h2>
+        <h2>${state.toJS().rover} Rover</h2>
         <p class="mb-3">
             The ${state.toJS().photos[0].rover.name} rover was launched on ${formatDate(state.toJS().photos[0].rover.launch_date)} and landed on ${formatDate(state.toJS().photos[0].rover.landing_date)}. ${state.toJS().photos[0].rover.name}'s status is ${state.toJS().photos[0].rover.status}.
         </p>
+        <h3>Photos for ${formatDate(state.toJS().photos[0].earth_date)}</h3>
         <div class="gallery">
             ${state.toJS().photos.reduce((html, photo) => 
-                (html + `<img src="${photo.img_src}" alt="${photo.full_name}">`), '')}
+                (html + `
+                    <object data="${photo.img_src}"><img src="https://placehold.co/800x800?text=Image+Not+Available" alt="${photo.full_name || photo.camera.full_name}"></object>`), '')}
         </div>`)
     }
     
@@ -88,10 +91,10 @@ const Photos = (state) => {
 
 const getPhotos = (state) => {
     // const { photos } = state
-    
-    fetch(`http://localhost:3000/mars`)
+
+    fetch(`http://localhost:3000/mars/${state.toJS().rover}`)
         .then(res => res.json())
-        .then(json => {
+        .then(json => { 
             updateStore(state, json) 
         })
 }
