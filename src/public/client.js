@@ -50,7 +50,7 @@ document.body.addEventListener('change', (e) => {
 
 const Form = (state) => {
     return (`
-    <form class="p-5 bg-light border border-1 mb-5">
+    <form class="form p-5 bg-light border border-1 mb-5">
         <div class="form-group">
             <label class="form-label">Rovers</label>
             <select class="form-select" id="rover">
@@ -72,15 +72,17 @@ const Photos = (state) => {
     
     if (state.toJS().rover) {
         return (`
-        <h2>${state.toJS().rover} Rover</h2>
-        <p class="mb-3">
-            The ${state.toJS().photos[0].rover.name} rover was launched on ${formatDate(state.toJS().photos[0].rover.launch_date)} and landed on ${formatDate(state.toJS().photos[0].rover.landing_date)}. ${state.toJS().photos[0].rover.name}'s status is ${state.toJS().photos[0].rover.status}.
-        </p>
-        <h3>Photos for ${formatDate(state.toJS().photos[0].earth_date)}</h3>
-        <div class="gallery">
-            ${state.toJS().photos.reduce((html, photo) => 
-                (html + `
-                    <object data="${photo.img_src}"><img src="https://placehold.co/800x800?text=Image+Not+Available" alt="${photo.full_name || photo.camera.full_name}"></object>`), '')}
+        <div class="results">
+            <h2>${state.toJS().rover} Rover</h2>
+            <p class="mb-3">
+                The ${state.toJS().photos[0].rover.name} rover was launched on ${formatDate(state.toJS().photos[0].rover.launch_date)} and landed on ${formatDate(state.toJS().photos[0].rover.landing_date)}. ${state.toJS().photos[0].rover.name}'s status is ${state.toJS().photos[0].rover.status}.
+            </p>
+            <h3>Photos for ${formatDate(state.toJS().photos[0].earth_date)}</h3>
+            <div class="gallery">
+                ${state.toJS().photos.reduce((html, photo) => 
+                    (html + `
+                        <object data="${photo.img_src}"><img src="https://placehold.co/800x800?text=Image+Not+Available" alt="${photo.full_name || photo.camera.full_name}"></object>`), '')}
+            </div>
         </div>`)
     }
     

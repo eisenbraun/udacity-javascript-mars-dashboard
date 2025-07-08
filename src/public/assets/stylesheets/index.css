@@ -35,4 +35,45 @@ footer {
   max-width: 100%;
 }
 
-/* Used Bootstrap Framework Grid and Breakpoints */
+/* -------------------  TABLET  --------------------- */
+@media (min-width: 768px) {
+  .gallery {
+    grid-auto-flow: row dense;
+  }
+
+  .gallery > :nth-child(1) {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+}
+
+/* -------------------  DESKTOP  -------------------- */
+
+@media (min-width: 1224px) {
+  .container-fluid {
+    max-width: 1400px;
+    margin: auto;
+  }
+
+  #root {
+    display: flex;
+    height: 100vh;
+    gap: 1rem;
+  }
+
+  .gallery > :nth-child(1) {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+  
+  .gallery > :nth-child(3n) {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+}
+
+/* -------------------  LARGE SCREENS  -------------- */
+
+@media (min-width: 1824px) {
+  
+}
